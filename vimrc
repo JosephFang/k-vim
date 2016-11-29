@@ -76,14 +76,14 @@ set noswapfile
 " TODO: remove this, use gundo
 " create undo file
 " if has('persistent_undo')
-  " " How many undos
-  " set undolevels=1000
-  " " number of lines to save for undo
-  " set undoreload=10000
-  " " So is persistent undo ...
-  " "set undofile
-  " set noundofile
-  " " set undodir=/tmp/vimundo/
+" " How many undos
+" set undolevels=1000
+" " number of lines to save for undo
+" set undoreload=10000
+" " So is persistent undo ...
+" "set undofile
+" set noundofile
+" " set undodir=/tmp/vimundo/
 " endif
 
 set wildignore=*.swp,*.bak,*.pyc,*.class,.svn
@@ -129,6 +129,9 @@ set magic
 set backspace=eol,start,indent
 set whichwrap+=<,>,h,l
 
+" auto change to pwd
+autocmd BufEnter * silent! lcd %:p:h
+
 "==========================================
 " Display Settings 展示/排版等界面格式设置
 "==========================================
@@ -152,8 +155,8 @@ set laststatus=2
 
 " 显示行号
 set number
-" 取消换行
-set nowrap
+" 换行
+set wrap
 
 " 括号配对情况, 跳转并高亮一下匹配的括号
 set showmatch
@@ -186,13 +189,13 @@ set foldlevel=99
 let g:FoldMethod = 0
 map <leader>zz :call ToggleFold()<cr>
 fun! ToggleFold()
-    if g:FoldMethod == 0
-        exe "normal! zM"
-        let g:FoldMethod = 1
-    else
-        exe "normal! zR"
-        let g:FoldMethod = 0
-    endif
+  if g:FoldMethod == 0
+    exe "normal! zM"
+    let g:FoldMethod = 1
+  else
+    exe "normal! zR"
+    let g:FoldMethod = 0
+  endif
 endfun
 
 " 缩进配置
@@ -204,11 +207,11 @@ set autoindent
 
 " tab相关变更
 " 设置Tab键的宽度        [等同的空格个数]
-set tabstop=4
+set tabstop=2
 " 每一次缩进对应的空格数
-set shiftwidth=4
+set shiftwidth=2
 " 按退格键时可以一次删掉 4 个空格
-set softtabstop=4
+set softtabstop=2
 " insert tabs on the start of a line according to shiftwidth, not tabstop 按退格键时可以一次删掉 4 个空格
 set smarttab
 " 将Tab自动转化成空格[需要输入真正的Tab键时，使用 Ctrl+V + Tab]
@@ -255,7 +258,7 @@ endif
 " 设置新文件的编码为 UTF-8
 set encoding=utf-8
 " 自动判断编码时，依次尝试以下编码：
-set fileencodings=ucs-bom,utf-8,cp936,gb18030,big5,euc-jp,euc-kr,latin1
+set fileencodings=ucs-bom,utf-8,cp932,cp936,gb18030,big5,euc-jp,euc-kr,latin1
 set helplang=cn
 "set langmenu=zh_CN.UTF-8
 "set enc=2byte-gb18030
@@ -363,8 +366,8 @@ nnoremap <F4> :set wrap! wrap?<CR>
 nnoremap <F6> :exec exists('syntax_on') ? 'syn off' : 'syn on'<CR>
 
 set pastetoggle=<F5>            "    when in insert mode, press <F5> to go to
-                                "    paste mode, where you can paste mass data
-                                "    that won't be autoindented
+"    paste mode, where you can paste mass data
+"    that won't be autoindented
 
 " disbale paste mode when leaving insert mode
 au InsertLeave * set nopaste
@@ -391,15 +394,15 @@ map <C-l> <C-W>l
 " http://stackoverflow.com/questions/13194428/is-better-way-to-zoom-windows-in-vim-than-zoomwin
 " Zoom / Restore window.
 function! s:ZoomToggle() abort
-    if exists('t:zoomed') && t:zoomed
-        execute t:zoom_winrestcmd
-        let t:zoomed = 0
-    else
-        let t:zoom_winrestcmd = winrestcmd()
-        resize
-        vertical resize
-        let t:zoomed = 1
-    endif
+  if exists('t:zoomed') && t:zoomed
+    execute t:zoom_winrestcmd
+    let t:zoomed = 0
+  else
+    let t:zoom_winrestcmd = winrestcmd()
+    resize
+    vertical resize
+    let t:zoomed = 1
+  endif
 endfunction
 command! ZoomToggle call s:ZoomToggle()
 nnoremap <silent> <Leader>z :ZoomToggle<CR>
@@ -571,10 +574,10 @@ au BufWinEnter *.php set mps-=<:>
 
 " 保存python文件时删除多余空格
 fun! <SID>StripTrailingWhitespaces()
-    let l = line(".")
-    let c = col(".")
-    %s/\s\+$//e
-    call cursor(l, c)
+  let l = line(".")
+  let c = col(".")
+  %s/\s\+$//e
+  call cursor(l, c)
 endfun
 autocmd FileType c,cpp,java,go,php,javascript,puppet,python,rust,twig,xml,yml,perl autocmd BufWritePre <buffer> :call <SID>StripTrailingWhitespaces()
 
@@ -582,20 +585,20 @@ autocmd FileType c,cpp,java,go,php,javascript,puppet,python,rust,twig,xml,yml,pe
 " 定义函数AutoSetFileHead，自动插入文件头
 autocmd BufNewFile *.sh,*.py exec ":call AutoSetFileHead()"
 function! AutoSetFileHead()
-    "如果文件类型为.sh文件
-    if &filetype == 'sh'
-        call setline(1, "\#!/bin/bash")
-    endif
+  "如果文件类型为.sh文件
+  if &filetype == 'sh'
+    call setline(1, "\#!/bin/bash")
+  endif
 
-    "如果文件类型为python
-    if &filetype == 'python'
-        call setline(1, "\#!/usr/bin/env python")
-        call append(1, "\# encoding: utf-8")
-    endif
+  "如果文件类型为python
+  if &filetype == 'python'
+    call setline(1, "\#!/usr/bin/env python")
+    call append(1, "\# encoding: utf-8")
+  endif
 
-    normal G
-    normal o
-    normal o
+  normal G
+  normal o
+  normal o
 endfunc
 
 
@@ -631,8 +634,8 @@ endif
 " let &t_SI = "\<Esc>]50;CursorShape=1\x7"
 " let &t_EI = "\<Esc>]50;CursorShape=0\x7"
 " if exists('$TMUX')
-    " let &t_SI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=1\x7\<Esc>\\"
-    " let &t_EI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=0\x7\<Esc>\\"
+" let &t_SI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=1\x7\<Esc>\\"
+" let &t_EI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=0\x7\<Esc>\\"
 " endif
 
 
@@ -642,19 +645,21 @@ endif
 
 " Set extra options when running in GUI mode
 if has("gui_running")
-    set guifont=Monaco:h14
-    if has("gui_gtk2")   "GTK2
-        set guifont=Monaco\ 12,Monospace\ 12
-    endif
-    set guioptions-=T
-    set guioptions+=e
-    set guioptions-=r
-    set guioptions-=L
-    set guitablabel=%M\ %t
-    set showtabline=1
-    set linespace=2
-    set noimd
-    set t_Co=256
+  set guifont=Hack\ h10.5
+  set lines=48 columns=85
+  if has("gui_gtk2")   "GTK2
+    set guifont=Hack\ 10.5
+    " set guifont=DejaVu\ Sans\ Mono\ 10.5
+  endif
+  set guioptions-=T
+  set guioptions+=e
+  set guioptions-=r
+  set guioptions-=L
+  set guitablabel=%M\ %t
+  set showtabline=1
+  set linespace=2
+  set noimd
+  set t_Co=256
 endif
 
 
@@ -683,6 +688,22 @@ highlight SpellRare term=underline cterm=underline
 highlight clear SpellLocal
 highlight SpellLocal term=underline cterm=underline
 
+" 转换文件编码
+function! ConvertToUTF8 ()
+  set fenc=utf-8
+  set nobomb
+  w
+endfunction
 
+function! ConvertToUTF8_B ()
+  set fenc=utf-8
+  set bomb
+  w
+endfunction
+
+function! ConvertToGBK ()
+  set fenc=cp936
+  w
+endfunction
 
 
