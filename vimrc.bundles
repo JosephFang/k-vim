@@ -265,6 +265,12 @@ if count(g:bundle_groups, 'beta')
 
 endif
 
+" OpenFoam syntax highlight
+" Plug 'JosephFang/vimExtensionOF'
+Plug 'effi/vim-OpenFoam-syntax'
+
+" Python folding
+Plug 'tmhedberg/SimpylFold'
 
 " Add plugins to &runtimepath
 call plug#end()
@@ -601,7 +607,7 @@ call plug#end()
     let g:airline_symbols.linenr = '¶'
     let g:airline_symbols.branch = '⎇'
     " 是否打开tabline
-    " let g:airline#extensions#tabline#enabled = 1
+    let g:airline#extensions#tabline#enabled = 1
 " }}}
 
 

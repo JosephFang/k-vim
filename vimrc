@@ -155,7 +155,8 @@ set laststatus=2
 " 显示行号
 set number
 " 取消换行
-set nowrap
+"set nowrap
+set wrap
 
 " 括号配对情况, 跳转并高亮一下匹配的括号
 set showmatch
@@ -206,11 +207,11 @@ set autoindent
 
 " tab相关变更
 " 设置Tab键的宽度        [等同的空格个数]
-set tabstop=4
+set tabstop=2
 " 每一次缩进对应的空格数
-set shiftwidth=4
+set shiftwidth=2
 " 按退格键时可以一次删掉 4 个空格
-set softtabstop=4
+set softtabstop=2
 " insert tabs on the start of a line according to shiftwidth, not tabstop 按退格键时可以一次删掉 4 个空格
 set smarttab
 " 将Tab自动转化成空格[需要输入真正的Tab键时，使用 Ctrl+V + Tab]
@@ -257,7 +258,7 @@ endif
 " 设置新文件的编码为 UTF-8
 set encoding=utf-8
 " 自动判断编码时，依次尝试以下编码：
-set fileencodings=ucs-bom,utf-8,cp936,gb18030,big5,euc-jp,euc-kr,latin1
+set fileencodings=ucs-bom,utf-8,cp932,cp936,gb18030,big5,euc-jp,euc-kr,latin1
 set helplang=cn
 "set langmenu=zh_CN.UTF-8
 "set enc=2byte-gb18030
@@ -644,9 +645,10 @@ endif
 
 " Set extra options when running in GUI mode
 if has("gui_running")
-    set guifont=Monaco:h14
+    set guifont=Monaco:h11
+    set lines=50 columns=85
     if has("gui_gtk2")   "GTK2
-        set guifont=Monaco\ 12,Monospace\ 12
+        set guifont=Monaco\ 11
     endif
     set guioptions-=T
     set guioptions+=e
@@ -655,7 +657,12 @@ if has("gui_running")
     set guitablabel=%M\ %t
     set showtabline=1
     set linespace=2
-    set noimd
+    " set noimd
+    " set imi=2
+    " set ims=2
+    set noimdisable
+    autocmd! InsertLeave * set imdisable|set iminsert=0
+    autocmd! InsertEnter * set noimdisable|set iminsert=0
     set t_Co=256
 endif
 
