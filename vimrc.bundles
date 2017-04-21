@@ -17,7 +17,7 @@ filetype off " required! turn off
 " inspired by spf13, 自定义需要的插件集合
 if !exists('g:bundle_groups')
     " let g:bundle_groups=['python', 'javascript', 'markdown', 'html', 'css', 'tmux', 'beta', 'json', 'nginx', 'golang', 'ruby', 'less', 'php', 'coffeescript', 'shell']
-    let g:bundle_groups=['python', 'javascript', 'markdown', 'html', 'css', 'tmux', 'beta', 'shell']
+    let g:bundle_groups=['c/c++', 'python', 'javascript', 'markdown', 'html', 'css', 'tmux', 'beta', 'html', 'ruby']
 endif
 
 " ----------------------------------------------------------------------------
@@ -155,6 +155,12 @@ Plug 'kana/vim-textobj-entire'
 " 增加缩进文本对象: i   dai yai cii - 相同缩进属于同一块
 Plug 'kana/vim-textobj-indent'
 
+if count(g:bundle_groups, 'c/c++')
+  " c/c++
+  " For C/C++ code format
+  Plug 'Chiel92/vim-autoformat'
+endif
+
 if count(g:bundle_groups, 'tmux')
     " tmux
     " For tmux navigator Ctrl-hjkl
@@ -278,6 +284,15 @@ if count(g:bundle_groups, 'beta')
 
 endif
 
+" OpenFoam syntax highlight
+" Plug 'JosephFang/vimExtensionOF'
+Plug 'effi/vim-OpenFoam-syntax'
+
+" Gmsh syntax
+Plug 'vim-scripts/gmsh.vim'
+
+" Python folding
+Plug 'tmhedberg/SimpylFold'
 
 Plug 'effi/vim-OpenFoam-syntax'
 
@@ -777,6 +792,36 @@ call plug#end()
     map <F10> :QuickRun<CR>
 " }}}
 
+" c/c++ {{{
+  " code format
+  noremap <F7> :Autoformat<CR>
+
+  let g:autoformat_verbosemode=1
+
+  let g:formatdef_autopep8 = "'autopep8 - --range '.a:firstline.' '.a:lastline"
+  let g:formatdef_astylec = '"astyle --style=google -s2 -xW -xw -Y -p -H -c -S -xg -W1"'
+  let g:formatdef_astylejava = '"astyle --style=java -s2 -xW -xw -Y -p -H -c -S -xg -W1"'
+  let g:formatdef_clangllvm = "'clang-format --lines='.a:firstline.':'.a:lastline.' --assume-filename='.bufname('%').' -style=\"{BasedOnStyle: llvm, SortIncludes: false}\"'"
+
+  let g:formatters_python = ['autopep8']
+  " let g:formatters_c = ['astylec']
+  " let g:formatters_cpp = ['astylec']
+  let g:formatters_cs = ['astylec']
+  let g:formatters_java = ['astylejava']
+  let g:formatters_c = ['clangllvm']
+  let g:formatters_cpp = ['clangllvm']
+  let g:formatters_objc = ['clangllvm']
+  " let g:formatters_java = ['clangllvm']
+
+  nnoremap <leader>fa :call CFormatAstyle()<CR>
+  func CFormatAstyle()
+    let g:formatters_c = ['astylec']
+    let g:formatters_cpp = ['astylec']
+    exec "Autoformat"
+    let g:formatters_c = ['clangllvm']
+    let g:formatters_cpp = ['clangllvm']
+  endfunc
+" }}}
 
 " pythonsyntax {{{
     let python_highlight_all = 1
@@ -831,7 +876,7 @@ call plug#end()
     " format all file
     autocmd FileType python nnoremap <leader>y :0,$!yapf<Cr>
     " format select block
-    " autocmd FileType python vnoremap <leader>y :!yapf<Cr>
+    autocmd filetype python vnoremap <leader>y :!yapf<cr>
 
     " Plug 'mindriot101/vim-yapf'
     " scriptencoding utf-8

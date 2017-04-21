@@ -154,6 +154,8 @@ set laststatus=2
 
 " 显示行号
 set number
+" 取消换行
+"set nowrap
 " 换行
 set wrap
 
@@ -209,9 +211,9 @@ set autoindent
 set tabstop=2
 " 每一次缩进对应的空格数
 set shiftwidth=2
-" 按退格键时可以一次删掉 4 个空格
+" 按退格键时可以一次删掉 2 个空格
 set softtabstop=2
-" insert tabs on the start of a line according to shiftwidth, not tabstop 按退格键时可以一次删掉 4 个空格
+" insert tabs on the start of a line according to shiftwidth, not tabstop 按退格键时可以一次删掉 2 个空格
 set smarttab
 " 将Tab自动转化成空格[需要输入真正的Tab键时，使用 Ctrl+V + Tab]
 set expandtab
@@ -660,7 +662,6 @@ if has("gui_running")
   set noimd
   set t_Co=256
 endif
-
 
 
 " theme主题
