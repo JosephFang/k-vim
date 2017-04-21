@@ -288,6 +288,9 @@ endif
 " Plug 'JosephFang/vimExtensionOF'
 Plug 'effi/vim-OpenFoam-syntax'
 
+" Gmsh syntax
+Plug 'vim-scripts/gmsh.vim'
+
 " Python folding
 Plug 'tmhedberg/SimpylFold'
 
