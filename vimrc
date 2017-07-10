@@ -320,6 +320,9 @@ if has("autocmd")
   au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 endif
 
+" 自动切换至当前路径
+" autocmd BufEnter * if expand("%:p:h") !~ '^/tmp' | silent! lcd %:p:h | endif
+
 "==========================================
 " HotKey Settings  自定义快捷键设置
 "==========================================
@@ -646,7 +649,7 @@ endif
 
 " Set extra options when running in GUI mode
 if has("gui_running")
-  set guifont=Hack\ h10.5
+  set guifont=Hack\ 10.5
   set lines=48 columns=85
   if has("gui_gtk2")   "GTK2
     set guifont=Hack\ 10.5
