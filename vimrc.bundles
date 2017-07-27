@@ -795,7 +795,7 @@ call plug#end()
   let g:formatdef_autopep8 = "'autopep8 - --range '.a:firstline.' '.a:lastline"
   let g:formatdef_astylec = '"astyle --style=google -s2 -xW -xw -Y -p -H -c -S -xg -W1"'
   let g:formatdef_astylejava = '"astyle --style=java -s2 -xW -xw -Y -p -H -c -S -xg -W1"'
-  let g:formatdef_clangllvm = "'clang-format --lines='.a:firstline.':'.a:lastline.' --assume-filename='.bufname('%').' -style=\"{BasedOnStyle: llvm, SortIncludes: false}, Standard: Auto\"'"
+  let g:formatdef_clangllvm = "'clang-format --lines='.a:firstline.':'.a:lastline.' --assume-filename='.bufname('%').' -style=\"{BasedOnStyle: llvm, SortIncludes: false, Standard: Auto}\"'"
 
   let g:formatters_python = ['autopep8']
   " let g:formatters_c = ['astylec']
