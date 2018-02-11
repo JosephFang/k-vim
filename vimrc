@@ -638,7 +638,7 @@ set lazyredraw          " redraw only when we need to.
 " Set extra options when running in GUI mode
 if has("gui_running")
     set guifont=Menlo:h12
-    set lines=51 columns=85
+    set lines=51 columns=90
     if has("gui_gtk2")   "GTK2
         set guifont=Menlo\ 12
     endif
@@ -649,15 +649,19 @@ if has("gui_running")
     set guitablabel=%M\ %t
     set showtabline=1
     set linespace=2
-    " set noimd
-    " set imi=2
-    " set ims=2
-    set noimdisable
-    autocmd! InsertLeave * set imdisable|set iminsert=0
-    autocmd! InsertEnter * set noimdisable|set iminsert=0
     set t_Co=256
 endif
 
+" 鼠须管输入法设置
+" set noimd
+set imi=2
+set ims=2
+" inoremap <ESC> <ESC>:set iminsert=2<CR>
+" set noimdisable
+" autocmd! InsertLeave * set imdisable|set iminsert=0
+" autocmd! InsertEnter * set noimdisable|set iminsert=0
+" autocmd! InsertLeave * set iminsert=0
+" autocmd! InsertEnter * set iminsert=2
 
 
 " theme主题

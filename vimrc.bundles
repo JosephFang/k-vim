@@ -41,6 +41,9 @@ endif
 " Snippets are separated from the engine. Add this if you want them:
 Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
 
+" Vim plugin will search for terms using the excellent Dash.app
+Plug 'rizzatti/dash.vim'
+
 " auto complete
 " 代码自动补全
 " 迄今为止用到的最好的自动VIM自动补全插件
