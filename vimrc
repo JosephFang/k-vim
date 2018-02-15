@@ -654,14 +654,13 @@ endif
 
 " 鼠须管输入法设置
 " set noimd
-set imi=2
-set ims=2
+set imi=0 ims=0
 " inoremap <ESC> <ESC>:set iminsert=2<CR>
 " set noimdisable
-" autocmd! InsertLeave * set imdisable|set iminsert=0
-" autocmd! InsertEnter * set noimdisable|set iminsert=0
-" autocmd! InsertLeave * set iminsert=0
-" autocmd! InsertEnter * set iminsert=2
+"autocmd! InsertLeave * set imdisable|set iminsert=0
+"autocmd! InsertEnter * set noimdisable|set iminsert=0
+"autocmd! InsertLeave * set iminsert=0
+"autocmd! InsertEnter * set iminsert=2
 
 
 " theme主题
