@@ -144,7 +144,7 @@ Plug 'tomasr/molokai'
 
 " nav
 " nerdtree nerdtreetabs
-Plug 'scrooloose/nerdtree' | Plug 'jistr/vim-nerdtree-tabs'
+"Plug 'scrooloose/nerdtree' | Plug 'jistr/vim-nerdtree-tabs'
 " ctrlspace
 Plug 'vim-ctrlspace/vim-ctrlspace'
 " tagbar
@@ -159,6 +159,9 @@ Plug 'kana/vim-textobj-line'
 Plug 'kana/vim-textobj-entire'
 " 增加缩进文本对象: i   dai yai cii - 相同缩进属于同一块
 Plug 'kana/vim-textobj-indent'
+
+" autoformat
+Plug 'Chiel92/vim-autoformat'
 
 if count(g:bundle_groups, 'tmux')
     " tmux
@@ -286,6 +289,15 @@ if count(g:bundle_groups, 'beta')
 
 endif
 
+" OpenFoam syntax highlight
+" Plug 'JosephFang/vimExtensionOF'
+Plug 'effi/vim-OpenFoam-syntax'
+
+" Gmsh syntax
+Plug 'vim-scripts/gmsh.vim'
+
+" Python folding
+Plug 'tmhedberg/SimpylFold'
 
 " Add plugins to &runtimepath
 call plug#end()
@@ -677,7 +689,7 @@ endif
     let g:airline_symbols.linenr = '¶'
     let g:airline_symbols.branch = '⎇'
     " 是否打开tabline
-    " let g:airline#extensions#tabline#enabled = 1
+    let g:airline#extensions#tabline#enabled = 1
 " }}}
 
 
@@ -828,6 +840,35 @@ endif
     map <F10> :QuickRun<CR>
 " }}}
 
+" codeformat {{{
+  noremap <F7> :Autoformat<CR>
+
+  let g:autoformat_verbosemode=1
+
+  let g:formatdef_autopep8 = "'autopep8 - --range '.a:firstline.' '.a:lastline"
+  let g:formatdef_astylec = '"astyle --style=google -s2 -xW -xw -Y -p -H -c -S -xg -W1"'
+  let g:formatdef_astylejava = '"astyle --style=java -s2 -xW -xw -Y -p -H -c -S -xg -W1"'
+  let g:formatdef_clangllvm = "'clang-format --lines='.a:firstline.':'.a:lastline.' --assume-filename='.bufname('%').' -style=\"{BasedOnStyle: llvm, SortIncludes: false, Standard: Auto}\"'"
+
+  let g:formatters_python = ['autopep8']
+  " let g:formatters_c = ['astylec']
+  " let g:formatters_cpp = ['astylec']
+  let g:formatters_cs = ['astylec']
+  let g:formatters_java = ['astylejava']
+  let g:formatters_c = ['clangllvm']
+  let g:formatters_cpp = ['clangllvm']
+  let g:formatters_objc = ['clangllvm']
+  " let g:formatters_java = ['clangllvm']
+
+  nnoremap <leader>fa :call CFormatAstyle()<CR>
+  func CFormatAstyle()
+    let g:formatters_c = ['astylec']
+    let g:formatters_cpp = ['astylec']
+    exec "Autoformat"
+    let g:formatters_c = ['clangllvm']
+    let g:formatters_cpp = ['clangllvm']
+  endfunc
+" }}}
 
 " pythonsyntax {{{
     let python_highlight_all = 1
