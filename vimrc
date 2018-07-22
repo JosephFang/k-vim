@@ -260,7 +260,7 @@ endif
 set encoding=utf-8
 " 自动判断编码时，依次尝试以下编码：
 set fileencodings=ucs-bom,utf-8,cp932,cp936,gb18030,big5,euc-jp,euc-kr,latin1
-set helplang=cn
+set helplang=en
 "set langmenu=zh_CN.UTF-8
 "set enc=2byte-gb18030
 " 下面这句只影响普通模式 (非图形界面) 下的 Vim
@@ -637,10 +637,10 @@ set lazyredraw          " redraw only when we need to.
 
 " Set extra options when running in GUI mode
 if has("gui_running")
-    set guifont=Menlo:h12
+    set guifont=SF\ Mono:h12
     set lines=51 columns=90
     if has("gui_gtk2")   "GTK2
-        set guifont=Menlo\ 12
+        set guifont=SF\ Mono\ 12
     endif
     set guioptions-=T
     set guioptions+=e
