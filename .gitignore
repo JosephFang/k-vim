@@ -7,3 +7,4 @@ myconfig.sh
 init.vim
 *.old
 .DS_Store
+.netrwhist
